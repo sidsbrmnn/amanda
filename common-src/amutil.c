@@ -540,7 +540,7 @@ bind_portrange(
     port = (in_port_t)(((getpid() + time(0)) % num_ports) + first_port);
 
     /*
-     * Scan through the range, trying all available ports that are either 
+     * Scan through the range, trying all available ports that are either
      * not taken in /etc/services or registered for *amanda*.  Wrap around
      * if we don't happen to start at the beginning.
      */
@@ -1494,7 +1494,7 @@ readline(
     return pgets(stdin);
 }
 
-void 
+void
 add_history(
     const char *line)
 {
@@ -1526,9 +1526,9 @@ char * portable_readdir(DIR* handle) {
     struct dirent *entry_p;
 #endif
 
-    static GStaticMutex mutex = G_STATIC_MUTEX_INIT;
+    static GMutex mutex;
 
-    g_static_mutex_lock(&mutex);
+    g_mutex_lock(&mutex);
 
 #ifdef USE_READDIR
     entry_p = readdir(handle);
@@ -1537,8 +1537,8 @@ char * portable_readdir(DIR* handle) {
     entry_p = readdir64(handle);
 #endif
 
-    g_static_mutex_unlock(&mutex);
-    
+    g_mutex_unlock(&mutex);
+
     if (entry_p == NULL)
         return NULL;
 

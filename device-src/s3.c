@@ -3029,17 +3029,17 @@ compile_regexes(void)
 #endif
 gboolean s3_init(void)
 {
-    static GStaticMutex mutex = G_STATIC_MUTEX_INIT;
+    static GMutex mutex;
     static gboolean init = FALSE, ret;
 
     /* n.b. curl_global_init is called in common-src/glib-util.c:glib_init() */
 
-    g_static_mutex_lock (&mutex);
+    g_mutex_lock (&mutex);
     if (!init) {
         ret = compile_regexes();
         init = TRUE;
     }
-    g_static_mutex_unlock(&mutex);
+    g_mutex_unlock(&mutex);
     return ret;
 }
 #if (GLIB_MAJOR_VERSION > 2 || (GLIB_MAJOR_VERSION == 2 && GLIB_MINOR_VERSION >= 31))
