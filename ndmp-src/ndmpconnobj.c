@@ -260,13 +260,13 @@ ndmp_connection_scsi_execute_cdb(
 	if (actual_datain_len)
 	    *actual_datain_len = reply->datain.datain_len;
 	if (datain_max_len && datain)
-	    g_memmove(datain, reply->datain.datain_val, reply->datain.datain_len);
+	    memmove(datain, reply->datain.datain_val, reply->datain.datain_len);
 
 	reply->ext_sense.ext_sense_len = MIN(ext_sense_max_len, reply->ext_sense.ext_sense_len);
 	if (actual_ext_sense_len)
 	    *actual_ext_sense_len = reply->ext_sense.ext_sense_len;
 	if (ext_sense_max_len && ext_sense)
-	    g_memmove(ext_sense, reply->ext_sense.ext_sense_val, reply->ext_sense.ext_sense_len);
+	    memmove(ext_sense, reply->ext_sense.ext_sense_val, reply->ext_sense.ext_sense_len);
 
 	NDMP_FREE();
     NDMP_END
@@ -358,7 +358,7 @@ ndmp_connection_tape_read(
 	request->count = count;
 	NDMP_CALL(self);
 	*out_count = reply->data_in.data_in_len;
-	g_memmove(buf, reply->data_in.data_in_val, *out_count);
+	memmove(buf, reply->data_in.data_in_val, *out_count);
 	NDMP_FREE();
     NDMP_END
     return TRUE;

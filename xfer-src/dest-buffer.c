@@ -114,7 +114,7 @@ push_buffer_impl(
 	self->allocated = new_size;
     }
 
-    g_memmove(((guint8 *)self->buf)+self->len, buf, len);
+    memmove(((guint8 *)self->buf)+self->len, buf, len);
     self->len += len;
 
     amfree(buf);
@@ -151,7 +151,7 @@ push_buffer_static_impl(
 	self->allocated = new_size;
     }
 
-    g_memmove(((guint8 *)self->buf)+self->len, buf, len);
+    memmove(((guint8 *)self->buf)+self->len, buf, len);
     self->len += len;
 }
 
